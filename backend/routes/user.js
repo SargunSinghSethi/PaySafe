@@ -8,7 +8,7 @@ const authMiddleware = require("../middleware");
 
 const signupBody = z.object({
   username: z.string().email(),
-  firstName: z.string(),
+  firstname: z.string(),
   lastname: z.string(),
   password: z.string(),
 });
@@ -16,32 +16,30 @@ const signupBody = z.object({
 router.post("/signup", async (req, res) => {
   const { success } = signupBody.safeParse(req.body);
   if (!success) {
-    return res
-      .status(411)
-      .json({ message: "Email already taken / Incorrect inputs" });
+    return res.status(411).json({ message: "Incorrect inputs" });
   }
   const existingUser = await User.findOne({
     username: req.body.username,
   });
   if (existingUser) {
-    return res
-      .status(411)
-      .json({ message: "Email already taken / Incorrect inputs" });
+    return res.status(411).json({ message: "Email already taken" });
   }
+
   const newUser = await User.create({
     username: req.body.username,
-    firstname: req.body.firstName,
+    firstname: req.body.firstname,
     lastname: req.body.lastname,
     password: req.body.password,
   });
 
   const userId = newUser._id;
-  const account = await Account.create({
+  await Account.create({
     userId: newUser._id,
     balance: 1 + Math.random() * 10000,
   });
 
-  const token = jwt.sign(userId, JWT_SECRET);
+  const token = jwt.sign({ userId: userId }, JWT_SECRET);
+  console.log(userId);
   res.status(200).json({
     message: "User created successfully",
     token: token,
@@ -66,7 +64,7 @@ router.post("/signin", async (req, res) => {
     return res.status(411).json({ message: "Error while logging in" });
   }
   const userId = existingUser._id;
-  const token = jwt.sign(userId, JWT_SECRET);
+  const token = jwt.sign({ userId: userId }, JWT_SECRET);
   res.status(200).json({
     token: token,
   });
@@ -91,9 +89,9 @@ router.put("/", authMiddleware, async (req, res) => {
   });
 });
 
-router.get("/bulk", authMiddleware, (req, res) => {
+router.get("/bulk", authMiddleware, async (req, res) => {
   const filter = req.query.filter || "";
-  const users = User.find({
+  const users = await User.find({
     $or: [
       {
         firstname: {

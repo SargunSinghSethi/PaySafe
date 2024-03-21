@@ -1,5 +1,5 @@
 const express = require("express");
-const Account = require("../db");
+const { Account } = require("../db");
 const { default: mongoose } = require("mongoose");
 const router = express.Router();
 
@@ -10,7 +10,9 @@ router.get("/balance", async (req, res) => {
       message: "Error while processing data",
     });
   }
-  const existingAccount = await Account.findOne({ userId: userId });
+  const existingAccount = await Account.findOne({
+    userId: userId,
+  });
   if (!existingAccount) {
     return res.status(403).json({
       message: "Account Credentails Invalid",

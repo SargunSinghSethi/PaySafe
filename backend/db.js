@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { MongoDB_Key } = require("./config");
 mongoose.connect(MongoDB_Key);
 const userSchema = new mongoose.Schema({
-  firstName: {
+  firstname: {
     type: String,
     require: true,
     trim: true,
@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     minLength: 8,
     maxLength: 30,
   },
-  lastName: {
+  lastname: {
     type: String,
     require: true,
     maxLength: 60,
