@@ -1,10 +1,11 @@
 const express = require("express");
 const { Account } = require("../db");
 const { default: mongoose } = require("mongoose");
+const authMiddleware = require("../middleware");
 const router = express.Router();
 
-router.get("/balance", async (req, res) => {
-  const userId = req.body.userId;
+router.get("/balance", authMiddleware, async (req, res) => {
+  const userId = req.userId;
   if (!userId) {
     return res.status(411).json({
       message: "Error while processing data",
@@ -23,7 +24,7 @@ router.get("/balance", async (req, res) => {
   });
 });
 
-router.post("/transfer", async (req, res) => {
+router.post("/transfer", authMiddleware, async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
   const { amount, to } = req.body;
