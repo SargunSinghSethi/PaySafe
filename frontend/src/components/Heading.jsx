@@ -1,8 +1,7 @@
-import React from "react"
-
-const Heading = (props) => {
+export default function Heading({label}) {
     return (
-        <><h1>{props.children}</h1></>
+        <div className="font-bold text-4xl pt-6">
+            {label}
+        </div>
     );
 }
-export default Heading;
