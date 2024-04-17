@@ -4,6 +4,7 @@ import Heading from '../components/Heading';
 import SubHeading from '../components/SubHeading';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
+import BottomWarning from '../components/BottomWarning';
 import axios from "axios";
 
 export const Signup = () => {
@@ -20,24 +21,28 @@ export const Signup = () => {
                 <SubHeading label={"Enter your information to create an account"} />
                 <InputBox 
                 label={"First Name"} 
+                type={"text"}
                 placeholder={"John"}
                 onChange={e => {
                     setFirstName(e.target.value)
                 }}/>
                 <InputBox 
                 label={"Last Name"} 
+                type={"text"}
                 placeholder={"Doe"}
                 onChange={e => {
                     setLastName(e.target.value)
                 }}/>
                 <InputBox 
                 label={"Email"} 
+                type={"email"}
                 placeholder={"johndoe@gmail.com"}
                 onChange={e => {
                     setUsername(e.target.value)
                 }}/>
                 <InputBox 
                 label={"Password"} 
+                type={"password"}
                 placeholder={"123456"}
                 onChange={e => {
                     setPassword(e.target.value)
@@ -56,6 +61,8 @@ export const Signup = () => {
                         navigate("/dashboard");
                     }}/>
                 </div>
+                {/* <BottomWarning label={"Already have an account?"} buttonText={"SignIn"} to={"/signin"}/> */}
+                <BottomWarning label={"Already have an account?"} buttonText={"SignIn"} to={"/dashboard"}/>
             </div>
         </div>
     )
