@@ -7,11 +7,15 @@ export const  Users = ()=> {
     const [users, setUsers] = useState([]);
 
     useEffect(()=> {
-        axios.get("https://localhost/api/v1/user/bulk?filter=" + filter)
+        axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter,{
+            headers : {
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }
+        })
         .then(response => {
             setUsers(response.data.users);
         })
-    })
+    },[filter])
 
     return <>
         <div className="font-bold mt-6 text-lg">
@@ -26,8 +30,8 @@ export const  Users = ()=> {
                 setFilter(e.target.value)
             }}/>
         </div>
-        <div>
-            {users.map(user=> <User user={user}/>)}
+        <div className="space-y-4">
+            {users.map(user=> <User user={user} key={user.firstname[0]}/>)}
         </div>
     </>
 }
@@ -51,7 +55,8 @@ function User({user}) {
             <Button 
             label={"Send Money"}
             onClick={e=> {
-                navigate("send?id="+ user.id + "&name=" + user.firstname);
+                console.log(user._id);
+                navigate("/send?id="+ user._id + "&name=" + user.firstname);
             }}/>
         </div>
     </div>

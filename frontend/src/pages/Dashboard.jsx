@@ -6,7 +6,7 @@ export const Dashboard= ()=> {
         <div>
             <Appbar/>
             <div className="m-10">
-                <Balance value={"10,000"}/>
+                <Balance/>
                 <Users />
             </div>
         </div>

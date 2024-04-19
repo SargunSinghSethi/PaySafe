@@ -51,7 +51,8 @@ export const Signup = () => {
                     <Button 
                     label={"Sign Up"}
                     onClick={async ()=>{
-                        const response = await axios.post("https://localhost:3000/api/v1/user/signup",{
+                        console.log(username,password,firstname,lastname);
+                        const response = await axios.post("http://localhost:3000/api/v1/user/signup",{
                             username,
                             firstname,
                             lastname,
@@ -61,8 +62,7 @@ export const Signup = () => {
                         navigate("/dashboard");
                     }}/>
                 </div>
-                {/* <BottomWarning label={"Already have an account?"} buttonText={"SignIn"} to={"/signin"}/> */}
-                <BottomWarning label={"Already have an account?"} buttonText={"SignIn"} to={"/dashboard"}/>
+                <BottomWarning label={"Already have an account?"} buttonText={"SignIn"} to={"/signin"}/>
             </div>
         </div>
     )

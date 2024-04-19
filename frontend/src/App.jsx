@@ -6,8 +6,8 @@ import {
 import {Signup} from "./pages/Signup";
 import {Signin} from "./pages/Signin";
 import {SendMoney} from "./pages/SendMoney";
-import "./App.css"
 import {Dashboard} from "./pages/Dashboard";
+import "./App.css"
 
 function App() {
   return (

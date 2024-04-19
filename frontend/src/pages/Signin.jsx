@@ -26,13 +26,13 @@ export const Signin = ()=> {
             type={"password"}
             placeholder={"123456"}
             onChange={e=> {
-                setUsername(e.target.value);
+                setPassword(e.target.value);
             }}/>
             <div className="pt-4">
                 <Button 
                 label={"Sign In"}
                 onClick={async ()=> {
-                    const response = await axios.post("https://localhost:3000/api/v1/user/signin",{
+                    const response = await axios.post("http://localhost:3000/api/v1/user/signin",{
                         username,
                         password
                     });
